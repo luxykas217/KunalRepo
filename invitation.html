@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Invitation</title>
+    <style>
+        body {
+            text-align: center;
+            padding-top: 50px;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            color: #333;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        img {
+            display: none;
+            margin-top: 30px;
+            max-width: 600px;
+            height: auto;
+        }
+        #images {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Select Language</h1>
+    <button onclick="showImage('english')">English</button>
+    <button onclick="showImage('marathi')">Marathi</button>
+
+    <div id="images">
+        <!-- Use the GitHub Pages link for English Invitation -->
+        <img id="english" src="https://luxykas217.github.io/KunalRepo/Kunal_invitation_English.jpg" alt="English Invitation">
+        <!-- Use the GitHub Pages link for Marathi Invitation -->
+        <img id="marathi" src="https://luxykas217.github.io/KunalRepo/Kunal_invitation_Marathi.jpg" alt="Marathi Invitation">
+    </div>
+
+    <script>
+        function showImage(language) {
+            // Hide both images initially
+            document.getElementById('english').style.display = 'none';
+            document.getElementById('marathi').style.display = 'none';
+            
+            // Show the selected language image
+            document.getElementById(language).style.display = 'block';
+        }
+    </script>
+</body>
+</html>
