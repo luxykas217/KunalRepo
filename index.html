@@ -5,67 +5,99 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invitation</title>
     <style>
+        /* Import a Google Font for a classier look */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
         body {
-            display: flex; /* Use flexbox for layout */
-            flex-direction: column; /* Arrange elements in a column */
-            justify-content: center; /* Center elements vertically */
-            align-items: center; /* Center elements horizontally */
-            height: 100vh; /* Full viewport height */
-            margin: 0; /* Remove default margin */
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9; /* Optional: background color */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to bottom right, #6a11cb, #2575fc); /* Blue and purple gradient background */
+            color: white;
         }
+
         h1 {
-            color: #333;
-            margin-bottom: 20px; /* Add space below heading */
+            color: white;
+            font-size: 2em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
         }
+
         button {
-            padding: 10px 20px;
+            padding: 12px 25px;
             font-size: 16px;
             margin: 10px;
             cursor: pointer;
-            background-color: #007BFF;
+            background: rgba(255, 255, 255, 0.1);
             color: white;
-            border: none;
-            border-radius: 5px;
+            border: 2px solid white;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.3);
         }
+
         button:hover {
-            background-color: #0056b3;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 4px 6px 15px rgba(0, 0, 0, 0.5);
         }
+
         #images {
-            display: none; /* Initially hide the image container */
-            margin-top: 20px; /* Space above the images */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
         }
+
         img {
-            display: none; /* Initially hide images */
-            max-width: 100%; /* Responsive size */
-            height: auto; /* Maintain aspect ratio */
-            max-height: 600px; /* Set a maximum height */
-            width: auto; /* Maintain original width */
+            display: none;
+            max-width: 90%;
+            max-height: 500px;
+            border-radius: 15px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        img.show {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Ensure the header and buttons stay centered */
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
     </style>
 </head>
 <body>
-    <h1>Select Language / भाषा निवडा</h1>
-    <button onclick="showImage('english')">English / इंग्रजी</button>
-    <button onclick="showImage('marathi')">Marathi / मराठी</button>
+    <div class="content-wrapper">
+        <h1>Select Language / भाषा निवडा</h1>
+        <button onclick="showImage('english')">English / इंग्रजी</button>
+        <button onclick="showImage('marathi')">Marathi / मराठी</button>
 
-    <div id="images">
-        <!-- Use the GitHub Pages link for English Invitation -->
-        <img id="english" src="https://luxykas217.github.io/KunalRepo/Kunal_invitation_English.jpg" alt="English Invitation">
-        <!-- Use the GitHub Pages link for Marathi Invitation -->
-        <img id="marathi" src="https://luxykas217.github.io/KunalRepo/Kunal_invitation_Marathi.jpg" alt="Marathi Invitation">
+        <div id="images">
+            <img id="english" src="https://luxykas217.github.io/KunalRepo/Kunal_invitation_English.jpg" alt="English Invitation">
+            <img id="marathi" src="https://luxykas217.github.io/KunalRepo/Kunal_invitation_Marathi.jpg" alt="Marathi Invitation">
+        </div>
     </div>
 
     <script>
         function showImage(language) {
             // Hide both images initially
-            document.getElementById('english').style.display = 'none';
-            document.getElementById('marathi').style.display = 'none';
-            // Show the image container
-            document.getElementById('images').style.display = 'block';
-            // Show the selected language image
-            document.getElementById(language).style.display = 'block';
+            document.getElementById('english').classList.remove('show');
+            document.getElementById('marathi').classList.remove('show');
+            
+            // Show the image container and the selected image
+            document.getElementById('images').style.display = 'flex';
+            document.getElementById(language).classList.add('show');
         }
     </script>
 </body>
