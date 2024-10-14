@@ -29,12 +29,11 @@
         }
 
         h1 {
-            font-size: 1.5em; /* Increased font size for a grander look */
-            margin-bottom: 15px; /* Increased margin for spacing */
+            font-size: 1.0em; /* Set your preferred font size */
+            margin: 5px 0; /* Reduced margin */
             text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);
             text-align: center; /* Center align the text */
-            transform: translateY(-20px); /* Move header upward */
-            font-style: italic; /* Make the header italic */
+            font-style: italic; /* Make header italic */
         }
 
         button {
@@ -60,8 +59,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-top: 10px; /* Adjusted margin */
-            margin-bottom: 20px; /* Added margin for spacing */
+            margin: 10px 0; /* Reduced margin */
         }
 
         img {
@@ -88,20 +86,24 @@
             position: relative; /* Ensures content stays in front of the moving background */
             z-index: 1;
         }
+
+        .button-container {
+            display: flex; /* Use flexbox for horizontal alignment */
+            justify-content: center; /* Center buttons horizontally */
+            align-items: center; /* Center buttons vertically */
+        }
     </style>
 </head>
 <body>
     <div class="content-wrapper">
         <h1>साखरपुडा सोहळा / Engagement Invitation</h1>
-        
-        <div style="display: flex; margin-bottom: 20px;"> <!-- Added margin-bottom for spacing -->
-            <button onclick="showImage('marathi')">Marathi / मराठी</button>
+        <div class="button-container"> <!-- Updated to use a flex container for horizontal buttons -->
+            <button onclick="showImage('marathi')">Marathi / मराठी</button> <!-- Marathi button first -->
             <button onclick="showImage('english')">English / इंग्रजी</button>
         </div>
-
         <div id="images">
-            <img id="english" src="https://luxykas217.github.io/KunalRepo/Kunal_invitation_English.jpg" alt="English Invitation">
             <img id="marathi" src="https://luxykas217.github.io/KunalRepo/Kunal_invitation_Marathi.jpg" alt="Marathi Invitation">
+            <img id="english" src="https://luxykas217.github.io/KunalRepo/Kunal_invitation_English.jpg" alt="English Invitation">
         </div>
     </div>
 
