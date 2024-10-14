@@ -1,15 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invitation</title>
     <style>
         body {
-            text-align: center;
-            padding-top: 50px;
+            display: flex; /* Use flexbox for layout */
+            flex-direction: column; /* Arrange elements in a column */
+            justify-content: center; /* Center elements vertically */
+            align-items: center; /* Center elements horizontally */
+            height: 100vh; /* Full viewport height */
+            margin: 0; /* Remove default margin */
             font-family: Arial, sans-serif;
+            background-color: #f9f9f9; /* Optional: background color */
         }
         h1 {
             color: #333;
+            margin-bottom: 20px; /* Add space below heading */
         }
         button {
             padding: 10px 20px;
@@ -24,21 +32,23 @@
         button:hover {
             background-color: #0056b3;
         }
-        img {
-            display: none;
-            margin-top: 30px;
-            max-width: 600px;
-            height: auto;
-        }
         #images {
-            margin-top: 20px;
+            display: none; /* Initially hide the image container */
+            margin-top: 20px; /* Space above the images */
+        }
+        img {
+            display: none; /* Initially hide images */
+            max-width: 100%; /* Responsive size */
+            height: auto; /* Maintain aspect ratio */
+            max-height: 600px; /* Set a maximum height */
+            width: auto; /* Maintain original width */
         }
     </style>
 </head>
 <body>
-    <h1>Select Language</h1>
-    <button onclick="showImage('english')">English</button>
-    <button onclick="showImage('marathi')">Marathi</button>
+    <h1>Select Language / भाषा निवडा</h1>
+    <button onclick="showImage('english')">English / इंग्रजी</button>
+    <button onclick="showImage('marathi')">Marathi / मराठी</button>
 
     <div id="images">
         <!-- Use the GitHub Pages link for English Invitation -->
@@ -52,7 +62,8 @@
             // Hide both images initially
             document.getElementById('english').style.display = 'none';
             document.getElementById('marathi').style.display = 'none';
-            
+            // Show the image container
+            document.getElementById('images').style.display = 'block';
             // Show the selected language image
             document.getElementById(language).style.display = 'block';
         }
