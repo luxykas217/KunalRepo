@@ -40,10 +40,10 @@
         }
 
         h1 {
-            font-size: 1.0em; /* Further decreased font size */
-            margin-bottom: 5px; /* Reduced margin */
+            font-size: 1.0em;
+            margin-bottom: 5px;
             text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);
-            text-align: center; /* Center align the text */
+            text-align: center;
             position: relative;
             z-index: 1;
         }
@@ -58,12 +58,12 @@
         }
 
         button {
-            padding: 8px 15px; /* Decreased button size */
-            font-size: 12px; /* Decreased font size */
-            margin: 5px; /* Reduced margin */
+            padding: 8px 15px;
+            font-size: 12px;
+            margin: 5px;
             cursor: pointer;
-            background: linear-gradient(to right, #f1c40f, #e67e22); /* Yellow gradient for button */
-            color: maroon; /* Maroon text */
+            background: linear-gradient(to right, #f1c40f, #e67e22);
+            color: maroon;
             border: 2px solid maroon;
             border-radius: 25px;
             transition: all 0.3s ease;
@@ -82,36 +82,31 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-top: 10px; /* Adjusted margin */
-            margin-bottom: 20px; /* Added margin for spacing */
-            position: relative;
-            z-index: 1;
+            margin-top: 10px;
+            margin-bottom: 20px;
         }
 
         img {
-            display: block;
+            display: none;
             max-width: 90%;
             max-height: 500px;
             border-radius: 15px;
             box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
-            opacity: 0;
-            transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
-            transform: scale(0.95);
+            transition: opacity 0.5s ease-in-out;
         }
 
         img.show {
+            display: block;
             opacity: 1;
-            transform: scale(1.05);
         }
 
-        /* Ensure the header and buttons stay centered */
         .content-wrapper {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            position: relative; /* Ensures content stays in front of the moving background */
+            position: relative;
             z-index: 1;
         }
 
@@ -131,13 +126,40 @@
                 max-height: 300px;
             }
         }
+
+        /* Fireworks animation */
+        @keyframes fireworks {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        .firework {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #fff;
+            border-radius: 50%;
+            animation: fireworks 1s ease-out infinite;
+        }
+
+        .firework:nth-child(1) { left: 50%; top: 50%; animation-delay: 0s; }
+        .firework:nth-child(2) { left: 30%; top: 20%; animation-delay: 0.2s; }
+        .firework:nth-child(3) { left: 70%; top: 30%; animation-delay: 0.4s; }
+        .firework:nth-child(4) { left: 20%; top: 70%; animation-delay: 0.6s; }
+        .firework:nth-child(5) { left: 80%; top: 80%; animation-delay: 0.8s; }
     </style>
 </head>
 <body>
     <div class="content-wrapper">
-        <h1>Engagement Invitation / सर्कारपुडा सोहळा</h1>
+        <h1>साखरपुडा सोहळा / Engagement Invitation</h1>
         <h2 id="countdown"></h2> <!-- Countdown timer -->
-        <div style="display: flex;"> <!-- Added this div to keep buttons horizontal -->
+        <div style="display: flex;">
             <button onclick="showImage('english')">English / इंग्रजी</button>
             <button onclick="showImage('marathi')">Marathi / मराठी</button>
         </div>
@@ -148,41 +170,50 @@
         </div>
     </div>
 
+    <!-- Fireworks container -->
+    <div id="fireworks" style="display:none;">
+        <div class="firework"></div>
+        <div class="firework"></div>
+        <div class="firework"></div>
+        <div class="firework"></div>
+        <div class="firework"></div>
+    </div>
+
     <script>
         function showImage(language) {
-            // Hide both images initially
             document.getElementById('english').classList.remove('show');
             document.getElementById('marathi').classList.remove('show');
-            
-            // Show the image container and the selected image
             document.getElementById('images').style.display = 'flex';
             document.getElementById(language).classList.add('show');
         }
 
-        // Set the date for the engagement
-        const engagementDate = new Date("2024-10-21T00:00:00").getTime();
+        const engagementDate = new Date("2024-10-26T00:00:00").getTime();
 
-        // Update the countdown every second
         const countdownInterval = setInterval(function () {
             const now = new Date().getTime();
             const timeLeft = engagementDate - now;
 
-            // Calculate days, hours, minutes, and seconds
             const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
             const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
-            // Display the countdown
-            document.getElementById("countdown").innerHTML = days + " Days " + hours + " Hours "
+            document.getElementById("countdown").innerHTML = days + " Days " + hours + " Hours " 
                 + minutes + " Minutes " + seconds + " Seconds ";
 
-            // If the countdown is finished
             if (timeLeft < 0) {
                 clearInterval(countdownInterval);
                 document.getElementById("countdown").innerHTML = "It's Engagement Day!";
+                showFireworks();
             }
         }, 1000);
+
+        function showFireworks() {
+            document.getElementById('fireworks').style.display = 'block';
+            setTimeout(function() {
+                document.getElementById('fireworks').style.display = 'none';
+            }, 5000); // Fireworks animation lasts for 5 seconds
+        }
     </script>
 </body>
 </html>
