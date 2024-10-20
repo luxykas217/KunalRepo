@@ -29,27 +29,20 @@
         }
 
         h1 {
-            font-size: 1.0em;
-            margin-bottom: 5px;
+            font-size: 1.0em; /* Set your preferred font size */
+            margin: 5px 0; /* Reduced margin */
             text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);
-            text-align: center;
-        }
-
-        /* Countdown style smaller than h1 */
-        h2 {
-            font-size: 0.8em; /* Smaller font size than h1 */
-            margin: 10px;
-            text-align: center;
-            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+            text-align: center; /* Center align the text */
+            font-style: italic; /* Make header italic */
         }
 
         button {
-            padding: 8px 15px;
-            font-size: 12px;
-            margin: 5px;
+            padding: 8px 15px; /* Decreased button size */
+            font-size: 12px; /* Decreased font size */
+            margin: 5px; /* Reduced margin */
             cursor: pointer;
-            background: linear-gradient(to right, #f1c40f, #e67e22);
-            color: maroon;
+            background: linear-gradient(to right, #f1c40f, #e67e22); /* Yellow gradient for button */
+            color: maroon; /* Maroon text */
             border: 2px solid maroon;
             border-radius: 25px;
             transition: all 0.3s ease;
@@ -66,8 +59,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-top: 10px;
-            margin-bottom: 20px;
+            margin: 10px 0; /* Reduced margin */
         }
 
         img {
@@ -84,129 +76,46 @@
             opacity: 1;
         }
 
+        /* Ensure the header and buttons stay centered */
         .content-wrapper {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            position: relative;
+            position: relative; /* Ensures content stays in front of the moving background */
             z-index: 1;
         }
 
-        /* Fireworks style */
-        .firework {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background-color: white;
-            border-radius: 50%;
-            animation: fireworks 1.5s ease-out infinite;
-        }
-
-        @keyframes fireworks {
-            0% {
-                transform: scale(0);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(1.5);
-                opacity: 0;
-            }
-        }
-
-        .firework:nth-child(1) { left: 50%; top: 50%; animation-delay: 0s; }
-        .firework:nth-child(2) { left: 40%; top: 20%; animation-delay: 0.2s; }
-        .firework:nth-child(3) { left: 60%; top: 70%; animation-delay: 0.4s; }
-        .firework:nth-child(4) { left: 20%; top: 50%; animation-delay: 0.6s; }
-        .firework:nth-child(5) { left: 80%; top: 30%; animation-delay: 0.8s; }
-
-        .fireworks-container {
-            display: none; /* Hidden until the engagement day */
-        }
-
-        /* Mobile view adjustments */
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 0.8em;
-            }
-
-            h2 {
-                font-size: 0.6em;
-            }
-
-            button {
-                font-size: 10px;
-                padding: 6px 12px;
-            }
-
-            img {
-                max-width: 100%;
-                max-height: 300px;
-            }
+        .button-container {
+            display: flex; /* Use flexbox for horizontal alignment */
+            justify-content: center; /* Center buttons horizontally */
+            align-items: center; /* Center buttons vertically */
         }
     </style>
 </head>
 <body>
     <div class="content-wrapper">
         <h1>साखरपुडा सोहळा / Engagement Invitation</h1>
-        <h2 id="countdown"></h2> <!-- Countdown will appear here -->
-        <div style="display: flex;">
-			<button onclick="showImage('marathi')">Marathi / मराठी</button>
+        <div class="button-container"> <!-- Updated to use a flex container for horizontal buttons -->
+            <button onclick="showImage('marathi')">Marathi / मराठी</button> <!-- Marathi button first -->
             <button onclick="showImage('english')">English / इंग्रजी</button>
-            
         </div>
-
         <div id="images">
-            <img id="english" src="https://luxykas217.github.io/KunalRepo/Kunal_invitation_English.jpg" alt="English Invitation">
-            <img id="marathi" src="https://luxykas217.github.io/KunalRepo/Kunal_invitation_Marathi.jpg" alt="Marathi Invitation">
+            <img id="marathi" src="https://kunalsonawane21.github.io/Kunal-InvitationRepo/Kunal_invitation_Marathi.jpg" alt="Marathi Invitation">
+            <img id="english" src="https://kunalsonawane21.github.io/Kunal-InvitationRepo/Kunal_invitation_English.jpg" alt="English Invitation">
         </div>
-    </div>
-
-    <!-- Fireworks container -->
-    <div class="fireworks-container" id="fireworks">
-        <div class="firework"></div>
-        <div class="firework"></div>
-        <div class="firework"></div>
-        <div class="firework"></div>
-        <div class="firework"></div>
     </div>
 
     <script>
         function showImage(language) {
+            // Hide both images initially
             document.getElementById('english').classList.remove('show');
             document.getElementById('marathi').classList.remove('show');
+            
+            // Show the image container and the selected image
             document.getElementById('images').style.display = 'flex';
             document.getElementById(language).classList.add('show');
-        }
-
-        // Countdown to the engagement date (21st October 2024)
-        const engagementDate = new Date("2024-10-26T00:00:00").getTime();
-
-        const countdownInterval = setInterval(function () {
-            const now = new Date().getTime();
-            const timeLeft = engagementDate - now;
-
-            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-
-            document.getElementById("countdown").innerHTML = days + " Days " + hours + " Hours " 
-                + minutes + " Minutes " + seconds + " Seconds ";
-
-            if (timeLeft < 0) {
-                clearInterval(countdownInterval);
-                document.getElementById("countdown").innerHTML = "It's Engagement Day!";
-                startFireworks(); // Start fireworks when the countdown ends
-            }
-        }, 1000);
-
-        function startFireworks() {
-            document.getElementById('fireworks').style.display = 'block';
-            setTimeout(function() {
-                document.getElementById('fireworks').style.display = 'none';
-            }, 5000); // Fireworks will last for 5 seconds
         }
     </script>
 </body>
