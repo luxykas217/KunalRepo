@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kunal &hearts; Siddhi ~ Engagement Invitation</title>
     <style>
-        /* Import a Google Font for a classier look */
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
         body {
@@ -37,18 +36,18 @@
         }
 
         .countdown {
-            font-size: 0.8em; /* Smaller than h1 */
-            margin-bottom: 15px;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+            font-size: 0.8em; /* Size less than h1 */
+            margin: 10px 0;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
         }
 
         button {
-            padding: 8px 15px;
-            font-size: 12px;
-            margin: 5px;
+            padding: 8px 15px; /* Decreased button size */
+            font-size: 12px; /* Decreased font size */
+            margin: 5px; /* Reduced margin */
             cursor: pointer;
-            background: linear-gradient(to right, #f1c40f, #e67e22);
-            color: maroon;
+            background: linear-gradient(to right, #f1c40f, #e67e22); /* Yellow gradient for button */
+            color: maroon; /* Maroon text */
             border: 2px solid maroon;
             border-radius: 25px;
             transition: all 0.3s ease;
@@ -65,7 +64,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 10px 0;
+            margin: 10px 0; /* Reduced margin */
         }
 
         img {
@@ -93,45 +92,27 @@
         }
 
         .button-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
         }
 
-        /* Cracker animation */
-        #fireworks {
-            position: fixed;
+        /* Fireworks canvas */
+        #fireworksCanvas {
+            position: absolute;
             top: 0;
             left: 0;
-            width: 100vw;
-            height: 100vh;
-            display: none;
-            z-index: 1000;
-            background-color: rgba(0, 0, 0, 0.5); /* Slight dark overlay */
-        }
-
-        .firework {
-            position: absolute;
-            width: 3px;
-            height: 3px;
-            background: white;
-            border-radius: 50%;
-            animation: explode 2s ease-in-out infinite;
-        }
-
-        @keyframes explode {
-            0% { transform: translate(0, 0); opacity: 1; }
-            100% { transform: translate(300px, 300px); opacity: 0; }
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            display: none; /* Hide by default */
         }
     </style>
 </head>
 <body>
     <div class="content-wrapper">
         <h1>साखरपुडा सोहळा / Engagement Invitation</h1>
-
-        <!-- Countdown Timer -->
-        <div class="countdown" id="countdown"></div>
-
+        <div class="countdown" id="countdown"><span id="time"></span></div>
         <div class="button-container">
             <button onclick="showImage('marathi')">Marathi / मराठी</button>
             <button onclick="showImage('english')">English / इंग्रजी</button>
@@ -142,63 +123,138 @@
         </div>
     </div>
 
-    <!-- Fireworks Container -->
-    <div id="fireworks"></div>
+    <canvas id="fireworksCanvas"></canvas>
 
     <script>
-        // Engagement Date (YYYY-MM-DD format)
-        const engagementDate = new Date('2024-10-21T00:00:00');
+        // Fireworks Functionality
+        const canvas = document.getElementById('fireworksCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-        // Countdown function
+        const fireworks = [];
+
+        class Firework {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 3 + 2; // Random size
+                this.color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                this.exploded = false;
+                this.particles = [];
+            }
+
+            update() {
+                if (!this.exploded) {
+                    this.y -= 5; // Move up
+                    if (this.y <= canvas.height / 2) {
+                        this.exploded = true;
+                        this.createParticles();
+                    }
+                } else {
+                    for (let i = 0; i < this.particles.length; i++) {
+                        this.particles[i].update();
+                    }
+                }
+            }
+
+            createParticles() {
+                const particleCount = Math.random() * 100 + 50;
+                for (let i = 0; i < particleCount; i++) {
+                    this.particles.push(new Particle(this.x, this.y, this.color));
+                }
+            }
+
+            draw() {
+                if (!this.exploded) {
+                    ctx.fillStyle = this.color;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                } else {
+                    for (let i = 0; i < this.particles.length; i++) {
+                        this.particles[i].draw();
+                    }
+                }
+            }
+        }
+
+        class Particle {
+            constructor(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 2 + 1;
+                this.color = color;
+                this.speedX = (Math.random() - 0.5) * 6;
+                this.speedY = (Math.random() - 0.5) * 6;
+                this.gravity = 0.05;
+                this.alpha = 1;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY + this.gravity;
+                this.alpha -= 0.01;
+            }
+
+            draw() {
+                ctx.globalAlpha = this.alpha;
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.globalAlpha = 1;
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if (fireworks.length < 10) {
+                fireworks.push(new Firework(Math.random() * canvas.width, canvas.height));
+            }
+            for (let i = 0; i < fireworks.length; i++) {
+                fireworks[i].update();
+                fireworks[i].draw();
+                if (fireworks[i].exploded && fireworks[i].particles.length === 0) {
+                    fireworks.splice(i, 1);
+                    i--;
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+
+        const engagementDate = new Date("2024-10-21T00:00:00").getTime(); // Set your engagement date here
+
         function updateCountdown() {
-            const now = new Date();
-            const timeDifference = engagementDate - now;
+            const now = new Date().getTime();
+            const distance = engagementDate - now;
 
-            if (timeDifference <= 0) {
-                document.getElementById('countdown').innerText = "It's Engagement Day!";
-                showFireworks(); // Trigger fireworks animation
-            } else {
-                const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                document.getElementById('countdown').innerText = 
-                    `${days}d ${hours}h ${minutes}m ${seconds}s left for the engagement!`;
+            document.getElementById("time").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                document.getElementById("countdown").innerHTML = "It's Engagement Day! 🎉"; // Updated message
+                showFireworks();
             }
         }
 
-        setInterval(updateCountdown, 1000);
-
-        // Show fireworks animation
         function showFireworks() {
-            const fireworksContainer = document.getElementById('fireworks');
-            fireworksContainer.style.display = 'block';
-            
-            for (let i = 0; i < 50; i++) {
-                let firework = document.createElement('div');
-                firework.classList.add('firework');
-                firework.style.left = `${Math.random() * window.innerWidth}px`;
-                firework.style.top = `${Math.random() * window.innerHeight}px`;
-                fireworksContainer.appendChild(firework);
-                
-                setTimeout(() => {
-                    firework.remove();
-                }, 2000);
-            }
-
-            setTimeout(() => {
-                fireworksContainer.style.display = 'none';
-            }, 10000); // Hide fireworks after 10 seconds
+            canvas.style.display = 'block'; // Show the canvas
+            animate(); // Start the animation
         }
 
-        // Show image function
         function showImage(language) {
             document.getElementById('english').classList.remove('show');
             document.getElementById('marathi').classList.remove('show');
-            document.getElementById('images').style.display = 'flex';
             document.getElementById(language).classList.add('show');
         }
+
+        const countdownInterval = setInterval(updateCountdown, 1000);
     </script>
 </body>
 </html>
