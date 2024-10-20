@@ -33,12 +33,16 @@
             text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);
             text-align: center;
             font-style: italic;
+            position: relative; /* Adjusted */
+            z-index: 2; /* Make sure text is above the canvas */
         }
 
         .countdown {
             font-size: 0.8em; /* Size less than h1 */
             margin: 10px 0;
             text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+            position: relative; /* Adjusted */
+            z-index: 2; /* Make sure text is above the canvas */
         }
 
         button {
@@ -52,6 +56,8 @@
             border-radius: 25px;
             transition: all 0.3s ease;
             box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.3);
+            position: relative; /* Adjusted */
+            z-index: 2; /* Make sure buttons are above the canvas */
         }
 
         button:hover {
@@ -65,6 +71,8 @@
             justify-content: center;
             align-items: center;
             margin: 10px 0; /* Reduced margin */
+            position: relative; /* Adjusted */
+            z-index: 1; /* Images below the text and buttons */
         }
 
         img {
@@ -88,7 +96,7 @@
             align-items: center;
             min-height: 100vh;
             position: relative;
-            z-index: 1;
+            z-index: 1; /* Below the fireworks canvas */
         }
 
         .button-container {
@@ -106,6 +114,7 @@
             height: 100%;
             pointer-events: none;
             display: none; /* Hide by default */
+            z-index: 3; /* Ensure canvas is above everything else */
         }
     </style>
 </head>
@@ -234,11 +243,10 @@
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            document.getElementById("time").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            document.getElementById("time").innerHTML = distance < 0 ? "It's Engagement Day! 🎉" : `${days}d ${hours}h ${minutes}m ${seconds}s`;
 
             if (distance < 0) {
                 clearInterval(countdownInterval);
-                document.getElementById("countdown").innerHTML = "It's Engagement Day! 🎉"; // Updated message
                 showFireworks();
             }
         }
